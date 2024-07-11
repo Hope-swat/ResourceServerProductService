@@ -26,7 +26,7 @@ public class ProductController {
 //    private ProductService productService2 = new FakeStoreProductService();
 
 
-    public ProductController(@Qualifier("selfProductService") ProductService productService,
+    public ProductController(@Qualifier("fakeStoreProductService") ProductService productService,
                              RestTemplate restTemplate
     ) {
         this.productService = productService;
@@ -74,7 +74,6 @@ public class ProductController {
     }
 
     public void updateProduct() {
-
     }
 
 //    @ExceptionHandler(ProductNotFoundException.class)
