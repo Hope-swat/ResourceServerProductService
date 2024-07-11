@@ -14,6 +14,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.refEq;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
@@ -30,11 +33,35 @@ class ProductControllerTest {
     }
 
     @Test
-    void getProductDetails() {
+    void getProductDetailsPositive() throws ProductNotFoundException {
+        Product product = new Product();
+        product.setTitle("MacBook pro");
+        product.setPrice(200000);
+        product.setDescription("Best Macbook ever");
+
+        when(productService.getSingleProduct(anyLong()))
+                .thenReturn(product);
+
+        Product response = productController.getProductDetails(10L);
+
+        assertEquals(product,
+                response,
+                "getSingleProduct API isn't returning the correct product object.");
     }
 
     @Test
-    void getAllProducts() throws ProductNotFoundException {
+    void getProductDetailsNegative() throws ProductNotFoundException {
+        when(productService.getSingleProduct(1000L))
+                .thenThrow(ProductNotFoundException.class);
+
+        assertThrows(
+                ProductNotFoundException.class,
+                () -> productController.getProductDetails(1000L)
+        );
+    }
+
+    @Test
+    void getAllProductsPositive() throws ProductNotFoundException {
         //Call the mocked ProductService and get a list of Products.
 
         Product p1 = new Product();

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service("selfProductService")
 public class SelfProductService implements ProductService {
@@ -24,6 +25,10 @@ public class SelfProductService implements ProductService {
     @Override
     public Product getSingleProduct(Long productId) throws ProductNotFoundException {
         return productRepository.findByIdIs(productId);
+
+//        if (product == null) {
+//            throw new ProductNotFoundException("")
+//        }
     }
 
     @Override

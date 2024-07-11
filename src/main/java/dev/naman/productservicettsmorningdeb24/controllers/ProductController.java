@@ -1,10 +1,8 @@
 package dev.naman.productservicettsmorningdeb24.controllers;
 
 import dev.naman.productservicettsmorningdeb24.dtos.CreateProductRequestDto;
-import dev.naman.productservicettsmorningdeb24.dtos.ErrorDto;
 import dev.naman.productservicettsmorningdeb24.exceptions.ProductNotFoundException;
 import dev.naman.productservicettsmorningdeb24.models.Product;
-import dev.naman.productservicettsmorningdeb24.services.FakeStoreProductService;
 import dev.naman.productservicettsmorningdeb24.services.ProductService;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
@@ -68,6 +66,15 @@ public class ProductController {
         List<Product> products = productService.getProducts();
 
 //        throw new ProductNotFoundException("Bla bla bla");
+
+//        for (Product product : products) {
+//            product.setTitle("Hello " + product.getTitle());
+//        }
+
+//        List<Product> products1 = new ArrayList<>();
+//        products1.add(new Product());
+//        products1.add(new Product());
+//        products1.add(new Product());
 
         ResponseEntity<List<Product>> response = new ResponseEntity<>(products, HttpStatus.OK);
         return response;
