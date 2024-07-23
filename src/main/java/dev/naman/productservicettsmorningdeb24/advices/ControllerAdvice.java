@@ -1,6 +1,7 @@
 package dev.naman.productservicettsmorningdeb24.advices;
 
 import dev.naman.productservicettsmorningdeb24.dtos.ErrorDto;
+import dev.naman.productservicettsmorningdeb24.exceptions.InvalidTokenException;
 import dev.naman.productservicettsmorningdeb24.exceptions.ProductNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,5 +18,16 @@ public class ControllerAdvice {
 
         return new ResponseEntity<>(errorDto, HttpStatus.NOT_FOUND);
 //        return null;
+    }
+
+    @ExceptionHandler(InvalidTokenException.class)
+    public ResponseEntity<ErrorDto> handleInvalidTokenException(InvalidTokenException exception) {
+        ErrorDto errorDto = new ErrorDto();
+        errorDto.setMessage(exception.getMessage());
+
+        return new ResponseEntity<>(
+                errorDto,
+                HttpStatus.NOT_FOUND
+        );
     }
 }

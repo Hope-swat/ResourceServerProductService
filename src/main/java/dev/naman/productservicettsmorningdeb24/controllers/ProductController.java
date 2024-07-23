@@ -1,6 +1,9 @@
 package dev.naman.productservicettsmorningdeb24.controllers;
 
+import dev.naman.productservicettsmorningdeb24.commons.AuthenticationCommons;
 import dev.naman.productservicettsmorningdeb24.dtos.CreateProductRequestDto;
+import dev.naman.productservicettsmorningdeb24.dtos.UserDto;
+import dev.naman.productservicettsmorningdeb24.exceptions.InvalidTokenException;
 import dev.naman.productservicettsmorningdeb24.exceptions.ProductNotFoundException;
 import dev.naman.productservicettsmorningdeb24.models.Product;
 import dev.naman.productservicettsmorningdeb24.services.ProductService;
@@ -20,15 +23,18 @@ public class ProductController {
 
     private ProductService productService;
     private RestTemplate restTemplate;
+    private AuthenticationCommons authenticationCommons;
 
 //    private ProductService productService2 = new FakeStoreProductService();
 
 
     public ProductController(@Qualifier("fakeStoreProductService") ProductService productService,
-                             RestTemplate restTemplate
+                             RestTemplate restTemplate,
+                             AuthenticationCommons authenticationCommons
     ) {
         this.productService = productService;
         this.restTemplate = restTemplate;
+        this.authenticationCommons = authenticationCommons;
     }
 
 // private ProductService productService;
@@ -55,8 +61,17 @@ public class ProductController {
     // GET /products/1
     // GET /products/201
 
-    @GetMapping("/products/{id}")
-    public Product getProductDetails(@PathVariable("id") Long productId) throws ProductNotFoundException {
+    @GetMapping("/products/{id}/{token}")
+    public Product getProductDetails(@PathVariable("id") Long productId,@PathVariable("token") String token) throws ProductNotFoundException, InvalidTokenException {
+
+        UserDto userDto = authenticationCommons.validateToken(token);
+
+        if (userDto == null) {
+            //Token is invalid.
+            throw new InvalidTokenException("Invalid token passed, please login first to get the Product details");
+        }
+
+        //Token is valid, make a call to Product Service to fetch the product.
         return productService.getSingleProduct(productId);
     }
 
