@@ -28,7 +28,7 @@ public class ProductController {
 //    private ProductService productService2 = new FakeStoreProductService();
 
 
-    public ProductController(@Qualifier("fakeStoreProductService") ProductService productService,
+    public ProductController(@Qualifier("selfProductService") ProductService productService,
                              RestTemplate restTemplate,
                              AuthenticationCommons authenticationCommons
     ) {
@@ -62,14 +62,17 @@ public class ProductController {
     // GET /products/201
 
     @GetMapping("/products/{id}/{token}")
-    public Product getProductDetails(@PathVariable("id") Long productId,@PathVariable("token") String token) throws ProductNotFoundException, InvalidTokenException {
+    public Product getProductDetails(@PathVariable("id") Long productId, @PathVariable("token") String token) throws ProductNotFoundException, InvalidTokenException {
 
-        UserDto userDto = authenticationCommons.validateToken(token);
+//        UserDto userDto = authenticationCommons.validateToken(token);
 
-        if (userDto == null) {
-            //Token is invalid.
-            throw new InvalidTokenException("Invalid token passed, please login first to get the Product details");
-        }
+//        if (userDto == null) {
+//            //Token is invalid.
+//            throw new InvalidTokenException("Invalid token passed, please login first to get the Product details");
+//        }
+
+        UserDto userDto =
+                restTemplate.getForObject("http://userservice/users/1", UserDto.class);
 
         //Token is valid, make a call to Product Service to fetch the product.
         return productService.getSingleProduct(productId);
