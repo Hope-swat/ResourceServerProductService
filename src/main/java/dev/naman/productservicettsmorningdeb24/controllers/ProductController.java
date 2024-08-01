@@ -28,7 +28,7 @@ public class ProductController {
 //    private ProductService productService2 = new FakeStoreProductService();
 
 
-    public ProductController(@Qualifier("selfProductService") ProductService productService,
+    public ProductController(@Qualifier("fakeStoreProductService") ProductService productService,
                              RestTemplate restTemplate,
                              AuthenticationCommons authenticationCommons
     ) {
@@ -71,8 +71,8 @@ public class ProductController {
 //            throw new InvalidTokenException("Invalid token passed, please login first to get the Product details");
 //        }
 
-        UserDto userDto =
-                restTemplate.getForObject("http://userservice/users/1", UserDto.class);
+//        UserDto userDto =
+//                restTemplate.getForObject("http://userservice/users/1", UserDto.class);
 
         //Token is valid, make a call to Product Service to fetch the product.
         return productService.getSingleProduct(productId);
