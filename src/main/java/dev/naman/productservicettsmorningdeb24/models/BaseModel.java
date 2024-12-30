@@ -19,8 +19,34 @@ public class BaseModel {
     private Date createdAt;
     private Date lastUpdatedAt;
     private boolean isDeleted;
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
+	public Date getCreatedAt() {
+		return createdAt;
+	}
+	public void setCreatedAt(Date createdAt) {
+		this.createdAt = createdAt;
+	}
+	public Date getLastUpdatedAt() {
+		return lastUpdatedAt;
+	}
+	public void setLastUpdatedAt(Date lastUpdatedAt) {
+		this.lastUpdatedAt = lastUpdatedAt;
+	}
+	public boolean isDeleted() {
+		return isDeleted;
+	}
+	public void setDeleted(boolean isDeleted) {
+		this.isDeleted = isDeleted;
+	}
 
 //    public Date getCreatedAt() {
 //        return createdAt;
 //    }
+    
+    
 }

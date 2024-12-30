@@ -17,7 +17,7 @@ public class AuthenticationCommons {
         //Make a call to validateToken API from userService to validate the token.
 
         UserDto userDto = restTemplate.getForObject(
-                "http://localhost:8181/users/validate/" + token,
+                "http://localhost:9000/users/validate/" + token,
                 UserDto.class
         );
 

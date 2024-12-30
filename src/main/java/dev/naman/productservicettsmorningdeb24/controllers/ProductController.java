@@ -64,12 +64,12 @@ public class ProductController {
     @GetMapping("/products/{id}/{token}")
     public Product getProductDetails(@PathVariable("id") Long productId, @PathVariable("token") String token) throws ProductNotFoundException, InvalidTokenException {
 
-//        UserDto userDto = authenticationCommons.validateToken(token);
+        UserDto userDto = authenticationCommons.validateToken(token);
 
-//        if (userDto == null) {
-//            //Token is invalid.
-//            throw new InvalidTokenException("Invalid token passed, please login first to get the Product details");
-//        }
+        if (userDto == null) {
+            //Token is invalid.
+            throw new InvalidTokenException("Invalid token passed, please login first to get the Product details");
+        }
 
 //        UserDto userDto =
 //                restTemplate.getForObject("http://userservice/users/1", UserDto.class);
